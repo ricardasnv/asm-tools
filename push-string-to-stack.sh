@@ -1,7 +1,15 @@
 #!/bin/bash
 # Quick and dirty tool for generating instructions to push a long string on the stack (for x86 or x86_64)
+#
 # Usage: ./push-string-to-stack.sh <file containing string> <cluster size in bytes> <indentation>
 # Example: ./push-string-to-stack.sh filename 8 "\t" | xclip
+#
+# Output may include null-bytes. To avoid them, make sure your string length is a multiple of your given cluster size
+# and push a null byte on the stack like so:
+#
+#	xor eax, eax
+#	push eax
+#	push 0x........ ;your string here
 
 file=$1
 cluster=$(expr 2 \* ${2})
